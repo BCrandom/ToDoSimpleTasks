@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Task | Firestore</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="favicon.png" type="image/x-icon">
+</head>
+<body>
+
+    <nav>
+        <h1 id="nav-title">To Do's List</h1><br>
+        <p id="nav-subtitle">write down your tasks</p>
+    </nav>
+
+    <form id="task-form">
+
+        <label for="task-title">Title:</label>
+        <input type="text" id="task-title" placeholder="Task Title">
+
+        <label for="task-description">Description:</label>
+        <textarea id="task-description" rows="3" placeholder="Task Description"></textarea>
+
+        <button id="btn-task-save">Save</button>
+
+    </form>
+
+    <div id="task-list"></div>
+    
+    <script type="module" src="index.js"></script>
+</body>
+</html>
