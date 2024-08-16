@@ -31,14 +31,17 @@ import {
 
 const db = getFirestore(app);
 
-export const saveTask = (title, description) => {
-    addDoc(collection(db, 'tasks'), { title, description })
-}
+export const saveTask = (title, description, pinned = false) => {
+    addDoc(collection(db, 'tasks'), {
+        title,
+        description,
+        pinned
+    });
+};
 
 export const getTasks = async () => {
-    /* getDocs(collection(db, 'tasks')) */
     const querySnapshot = await getDocs(collection(db, 'tasks'));
-    return querySnapshot/* .docs.map(doc => ({ id: doc.id, ...doc.data() })); */
+    return querySnapshot
 }
 
 export const onGetTasks = (callback) => {

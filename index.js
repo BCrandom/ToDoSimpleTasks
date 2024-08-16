@@ -12,15 +12,16 @@ window.addEventListener('DOMContentLoaded', async () => {
         let html = ''
 
         querySnapshot.forEach((doc) => {
-        const tarea = doc.data()
-        html += `
-            <div id="task">
-                <h3>${tarea.title}</h3>
-                <p>${tarea.description}</p>
-                <button class='btn-delete' data-id="${doc.id}">Delete</button>
-                <button class='btn-edit' data-id="${doc.id}">Edit</button>
-            </div>
-        `
+            const tarea = doc.data()
+            html += `
+                <div id="task">
+                    <h3>${tarea.title}</h3>
+                    <p>${tarea.description}</p>
+                    <button class='btn-delete' data-id="${doc.id}">Delete</button>
+                    <button class='btn-edit' data-id="${doc.id}">Edit</button>
+                    <button class='btn-pin' data-id="${doc.id}">${tarea.pinned ? 'Unpin' : 'Pin'}</button>
+                </div>
+            `
         });
 
         taskContainer.innerHTML = html;
@@ -47,6 +48,18 @@ window.addEventListener('DOMContentLoaded', async () => {
                 taskForm['btn-task-save'].innerText = 'Update'
             })
         });
+
+        const btnsPin = taskContainer.querySelectorAll('.btn-pin')
+        btnsPin.forEach((btn) => {
+            btn.addEventListener('click', async ({target: {dataset}}) => {
+                const doc = await getTask(dataset.id)
+                const task = doc.data();
+
+                updateTask(dataset.id, {
+                    pinned: !task.pinned
+                })
+            })
+        });
     })
 })
 
@@ -57,7 +70,7 @@ taskForm.addEventListener('submit', (e) => {
     const description = taskForm['task-description']
 
     if (!editStatus) {
-        saveTask(title.value, description.value)
+        saveTask(title.value, description.value, false) // Añadir el campo pinned
     } else {
         updateTask(id, {
             title: title.value, 
